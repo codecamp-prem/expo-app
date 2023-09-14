@@ -3,10 +3,15 @@ import { Text, View } from "react-native";
 
 import styles from "./App.styles";
 import { ImageOption } from "./app/components/ImageOption";
+import { Button } from "./app/components/Button";
 import oneQuestionWithOption from "./assets/data/oneQuestionWithOption";
 
 const App = () => {
   const [selected, setSelected] = useState(null);
+  const onBtnPress = () => {
+    console.warn("Btn Pressed");
+  };
+
   return (
     <View style={styles.root}>
       <Text style={styles.title}>{oneQuestionWithOption.question}</Text>
@@ -21,6 +26,7 @@ const App = () => {
           />
         ))}
       </View>
+      <Button btnText="Check" onPress={onBtnPress} disable={!selected} />
     </View>
   );
 };
