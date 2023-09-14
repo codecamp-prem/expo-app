@@ -6,19 +6,10 @@ import questions from "./assets/data/imageMulatipleChoiceQuestions";
 import { ImageMultipleChoiceQuestions } from "./app/components/ImageMultipleChoiceQuestions";
 
 const App = () => {
-  const [selected, setSelected] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentQuestionIndex]
   );
-  const onBtnPress = () => {
-    if (selected.correct) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelected(null);
-    } else {
-      Alert.alert("Wrong!");
-    }
-  };
 
   useEffect(() => {
     if (currentQuestionIndex >= questions.length) {
@@ -33,9 +24,8 @@ const App = () => {
     <View style={styles.root}>
       <ImageMultipleChoiceQuestions
         currentQuestion={currentQuestion}
-        selected={selected}
-        setSelected={setSelected}
-        onBtnPress={onBtnPress}
+        currentQuestionIndex={currentQuestionIndex}
+        setCurrentQuestionIndex={setCurrentQuestionIndex}
       />
     </View>
   );

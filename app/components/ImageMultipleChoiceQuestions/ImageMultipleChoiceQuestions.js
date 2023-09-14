@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Text, View } from "react-native";
 
 import { ImageOption } from "../ImageOption";
 import { Button } from "../Button";
@@ -7,10 +7,19 @@ import styles from "./styles";
 
 const ImageMultipleChoiceQuestions = ({
   currentQuestion,
-  selected,
-  setSelected,
-  onBtnPress,
+  currentQuestionIndex,
+  setCurrentQuestionIndex,
 }) => {
+  const [selected, setSelected] = useState(null);
+  const onBtnPress = () => {
+    if (selected.correct) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelected(null);
+    } else {
+      Alert.alert("Wrong!");
+    }
+  };
+
   return (
     <>
       <Text style={styles.title}>{currentQuestion.question}</Text>

@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
   },
-  title: { fontSize: 20, fontWeight: "bold", alignSelf: "stretch" },
 });
 
 export default styles;
