@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
+import PropTypes from "prop-types";
 
 import { ImageOption } from "../ImageOption";
 import { Button } from "../Button";
@@ -7,16 +8,16 @@ import styles from "./styles";
 
 const ImageMultipleChoiceQuestions = ({
   currentQuestion,
-  currentQuestionIndex,
-  setCurrentQuestionIndex,
+  onCorrect,
+  onWrong,
 }) => {
   const [selected, setSelected] = useState(null);
   const onBtnPress = () => {
     if (selected.correct) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      onCorrect();
       setSelected(null);
     } else {
-      Alert.alert("Wrong!");
+      onWrong();
     }
   };
 
@@ -37,5 +38,19 @@ const ImageMultipleChoiceQuestions = ({
       <Button btnText="Check" onPress={onBtnPress} disable={!selected} />
     </>
   );
+};
+
+ImageMultipleChoiceQuestions.propTypes = {
+  currentQuestion: PropTypes.shape({
+    question: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        text: PropTypes.string,
+        image: PropTypes.string,
+        correct: PropTypes.bool,
+      })
+    ).isRequired,
+  }).isRequired,
 };
 export default ImageMultipleChoiceQuestions;

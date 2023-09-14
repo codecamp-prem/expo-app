@@ -20,12 +20,18 @@ const App = () => {
     }
   }, [currentQuestionIndex]);
 
+  const onCorrect = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+  };
+  const onWrong = () => {
+    Alert.alert("Wrong");
+  };
   return (
     <View style={styles.root}>
       <ImageMultipleChoiceQuestions
         currentQuestion={currentQuestion}
-        currentQuestionIndex={currentQuestionIndex}
-        setCurrentQuestionIndex={setCurrentQuestionIndex}
+        onCorrect={onCorrect}
+        onWrong={onWrong}
       />
     </View>
   );
