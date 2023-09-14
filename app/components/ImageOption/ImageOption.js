@@ -1,11 +1,14 @@
 import React from "react";
-import { Image, View, Text } from "react-native";
+import { Image, Pressable, Text } from "react-native";
 import PropTypes from "prop-types";
 
 import styles from "./styles";
 
-const ImageOption = ({ image, name }) => (
-  <View style={styles.optionContainer}>
+const ImageOption = ({ image, optionName, isSelected, onPress }) => (
+  <Pressable
+    onPress={onPress}
+    style={[styles.optionContainer, isSelected ? styles.selectedContainer : {}]}
+  >
     <Image
       resizeMode="contain"
       source={{
@@ -13,17 +16,22 @@ const ImageOption = ({ image, name }) => (
       }}
       style={styles.optionImage}
     />
-    <Text style={styles.optionText}>{name}</Text>
-  </View>
+    <Text style={isSelected ? styles.selectedText : styles.optionText}>
+      {optionName}
+    </Text>
+  </Pressable>
 );
 ImageOption.propTypes = {
   image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool,
+  optionName: PropTypes.string,
+  onPress: PropTypes.func,
 };
 
-// default if correct type is not send: nothing is send not wrong type
-// ImageOption.propTypes = {
-//   name: "Cato predeterminada",
-// };
+ImageOption.defaultProps = {
+  isSelected: false,
+  optionName: "predeterminada",
+  onPress: () => {},
+};
 
 export default ImageOption;
