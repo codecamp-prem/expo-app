@@ -1,32 +1,42 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, View } from "react-native";
 
 import styles from "./App.styles";
-import { ImageOption } from "./app/components/ImageOption";
-import { Button } from "./app/components/Button";
-import oneQuestionWithOption from "./assets/data/oneQuestionWithOption";
+import questions from "./assets/data/imageMulatipleChoiceQuestions";
+import { ImageMultipleChoiceQuestions } from "./app/components/ImageMultipleChoiceQuestions";
 
 const App = () => {
   const [selected, setSelected] = useState(null);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(
+    questions[currentQuestionIndex]
+  );
   const onBtnPress = () => {
-    console.warn("Btn Pressed");
+    if (selected.correct) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelected(null);
+    } else {
+      Alert.alert("Wrong!");
+    }
   };
+
+  useEffect(() => {
+    if (currentQuestionIndex >= questions.length) {
+      Alert.alert("You won");
+      setCurrentQuestionIndex(0);
+    } else {
+      setCurrentQuestion(questions[currentQuestionIndex]);
+    }
+  }, [currentQuestionIndex]);
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>{oneQuestionWithOption.question}</Text>
-      <View style={styles.optionContainerBlock}>
-        {oneQuestionWithOption.options.map((option) => (
-          <ImageOption
-            key={option.id}
-            image={option.image}
-            optionName={option.text}
-            isSelected={selected?.id === option.id}
-            onPress={() => setSelected(option)}
-          />
-        ))}
-      </View>
-      <Button btnText="Check" onPress={onBtnPress} disable={!selected} />
+      <ImageMultipleChoiceQuestions
+        currentQuestion={currentQuestion}
+        selected={selected}
+        setSelected={setSelected}
+        onBtnPress={onBtnPress}
+      />
     </View>
   );
 };
