@@ -1,27 +1,27 @@
 export default [
-  {
-    id: "q0",
-    type: "FILL_IN_THE_BLANK",
-    parts: [
-      {
-        text: "la",
-        isBlank: true,
-      },
-      {
-        text: "nino",
-        isBlank: true,
-      },
-      {
-        text: "el",
-        isBlank: true,
-      },
-      {
-        text: "nina",
-        isBlank: true,
-      },
-    ],
-    options: ["la", "el", "nina", "nino", "ella"],
-  },
+  // {
+  //   id: "q0",
+  //   type: "FILL_IN_THE_BLANK",
+  //   parts: [
+  //     {
+  //       text: "la",
+  //       isBlank: true,
+  //     },
+  //     {
+  //       text: "nino",
+  //       isBlank: true,
+  //     },
+  //     {
+  //       text: "el",
+  //       isBlank: true,
+  //     },
+  //     {
+  //       text: "nina",
+  //       isBlank: true,
+  //     },
+  //   ],
+  //   options: ["la", "el", "nina", "nino", "ella"],
+  // },
   {
     id: "q1",
     type: "IMAGE_MULTIPLE_CHOICE",
@@ -94,13 +94,13 @@ export default [
   },
   {
     id: "q4",
-    type: "IMAGE_MULTIPLE_CHOICE",
+    //type: "IMAGE_MULTIPLE_CHOICE",
     type: "OPEN_ENDED",
     text: "La mujer",
     answer: "the woman",
   },
   {
-    id: "q3",
+    id: "q5",
     question: 'Which of these is "the cup"?',
     type: "IMAGE_MULTIPLE_CHOICE",
     options: [
@@ -132,13 +132,13 @@ export default [
     ],
   },
   {
-    id: "q5",
+    id: "q6",
     type: "OPEN_ENDED",
     text: "Me gusta React Native",
     answer: "I like react native",
   },
   {
-    id: "q6",
+    id: "q7",
     type: "IMAGE_MULTIPLE_CHOICE",
     question: 'Which of these is "the milk"?',
     options: [
