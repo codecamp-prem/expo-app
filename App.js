@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { ActivityIndicator, Alert, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styles from "./App.styles";
@@ -8,6 +8,7 @@ import questions from "./assets/data/allQuestions";
 import { ImageMultipleChoiceQuestions } from "./app/components/ImageMultipleChoiceQuestions";
 import { OpenEndedQuestions } from "./app/components/OpenEndedQuestions";
 import Header from "./app/components/Header/Header";
+import FillTheBlank from "./app/components/FillTheBlank/FillTheBlank";
 
 const App = () => {
   const [hasAppLoaded, setHasAppLoaded] = useState(false);
@@ -90,6 +91,7 @@ const App = () => {
   if (!hasAppLoaded) {
     return <ActivityIndicator />;
   }
+
   return (
     <View style={styles.root}>
       <Header
@@ -97,8 +99,13 @@ const App = () => {
         lives={lives}
       />
       {currentQuestion.type === "FILL_IN_THE_BLANK" && (
-        <Text>FILL_IN_THE_BLANK</Text>
+        <FillTheBlank
+          currentQuestion={currentQuestion}
+          onCorrect={onCorrect}
+          onWrong={onWrong}
+        />
       )}
+
       {currentQuestion.type === "IMAGE_MULTIPLE_CHOICE" && (
         <ImageMultipleChoiceQuestions
           currentQuestion={currentQuestion}
