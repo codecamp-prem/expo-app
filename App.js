@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Alert, Text, View } from "react-native";
 
 import styles from "./App.styles";
-//import questions from "./assets/data/imageMulatipleChoiceQuestions";
-// import questions from "./assets/data/openEndedQuestions";
-
 import questions from "./assets/data/allQuestions";
 
 import { ImageMultipleChoiceQuestions } from "./app/components/ImageMultipleChoiceQuestions";
 import { OpenEndedQuestions } from "./app/components/OpenEndedQuestions";
+import Header from "./app/components/Header/Header";
 
 const App = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -34,6 +32,7 @@ const App = () => {
   //Alert.alert(currentQuestion);
   return (
     <View style={styles.root}>
+      <Header progress={currentQuestionIndex / questions.length} />
       {currentQuestion.type === "FILL_IN_THE_BLANK" && (
         <Text>FILL_IN_THE_BLANK</Text>
       )}
