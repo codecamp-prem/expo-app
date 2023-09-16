@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styles from "./App.styles";
 import questions from "./assets/data/allQuestions";
@@ -9,11 +10,17 @@ import { OpenEndedQuestions } from "./app/components/OpenEndedQuestions";
 import Header from "./app/components/Header/Header";
 
 const App = () => {
+  const [hasAppLoaded, setHasAppLoaded] = useState(false);
   const [lives, setLives] = useState(5);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentQuestionIndex]
   );
+
+  // check for local storage data when App mounts
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const restart = () => {
     setLives(5);
@@ -33,9 +40,17 @@ const App = () => {
     }
   }, [currentQuestionIndex]);
 
+  // save data to local storage when this values changes
+  useEffect(() => {
+    if (hasAppLoaded) {
+      saveData();
+    }
+  }, [lives, currentQuestionIndex, hasAppLoaded]);
+
   const onCorrect = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
+
   const onWrong = () => {
     if (lives <= 1) {
       Alert.alert("Game Over", "Try Again", [
@@ -49,7 +64,32 @@ const App = () => {
       setLives(lives - 1);
     }
   };
-  //Alert.alert(currentQuestion);
+
+  const saveData = async () => {
+    await AsyncStorage.setItem("lives", lives.toString());
+    await AsyncStorage.setItem(
+      "currentQuestionIndex",
+      currentQuestionIndex.toString()
+    );
+  };
+
+  const loadData = async () => {
+    const loadLives = await AsyncStorage.getItem("lives");
+    if (loadLives) {
+      setLives(parseInt(loadLives));
+    }
+    const currentQuestionIndex = await AsyncStorage.getItem(
+      "currentQuestionIndex"
+    );
+    if (currentQuestionIndex) {
+      setCurrentQuestionIndex(parseInt(currentQuestionIndex));
+    }
+    setHasAppLoaded(true);
+  };
+
+  if (!hasAppLoaded) {
+    return <ActivityIndicator />;
+  }
   return (
     <View style={styles.root}>
       <Header
