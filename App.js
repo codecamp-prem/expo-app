@@ -9,6 +9,7 @@ import { OpenEndedQuestions } from "./app/components/OpenEndedQuestions";
 import Header from "./app/components/Header/Header";
 
 const App = () => {
+  const [lives, setLives] = useState(5);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentQuestionIndex]
@@ -23,16 +24,33 @@ const App = () => {
     }
   }, [currentQuestionIndex]);
 
+  const restart = () => {
+    setLives(5);
+    setCurrentQuestionIndex(0);
+  };
   const onCorrect = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
   const onWrong = () => {
-    Alert.alert("Wrong");
+    if (lives <= 1) {
+      Alert.alert("Game Over", "Try Again", [
+        {
+          text: "Try Again",
+          onPress: restart,
+        },
+      ]);
+    } else {
+      Alert.alert("Wrong");
+      setLives(lives - 1);
+    }
   };
   //Alert.alert(currentQuestion);
   return (
     <View style={styles.root}>
-      <Header progress={currentQuestionIndex / questions.length} />
+      <Header
+        progress={currentQuestionIndex / questions.length}
+        lives={lives}
+      />
       {currentQuestion.type === "FILL_IN_THE_BLANK" && (
         <Text>FILL_IN_THE_BLANK</Text>
       )}

@@ -41,7 +41,7 @@ const OpenEndedQuestions = ({
         textAlignVertical="top"
         value={input}
       />
-      <Button btnText="Check" onPress={onBtnPress} disable={!selected} />
+      <Button btnText="Check" onPress={onBtnPress} disable={!input} />
     </>
   );
 };
