@@ -15,19 +15,24 @@ const App = () => {
     questions[currentQuestionIndex]
   );
 
+  const restart = () => {
+    setLives(5);
+    setCurrentQuestionIndex(0);
+  };
+
   useEffect(() => {
     if (currentQuestionIndex >= questions.length) {
-      Alert.alert("You won");
-      setCurrentQuestionIndex(0);
+      Alert.alert("Congrats! You Won", "Play Again", [
+        {
+          text: "Play Again",
+          onPress: restart,
+        },
+      ]);
     } else {
       setCurrentQuestion(questions[currentQuestionIndex]);
     }
   }, [currentQuestionIndex]);
 
-  const restart = () => {
-    setLives(5);
-    setCurrentQuestionIndex(0);
-  };
   const onCorrect = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
